@@ -1,0 +1,7 @@
+// CS 2110 Sample File
+
+Title:  This is a Sample File for CS 2110
+
+// This is a very small file.
+
+Once upon a time, there was a lab known as Rice 130 where all the rookies went and coded so hard that they emitted radiation and their code came to life. The End.

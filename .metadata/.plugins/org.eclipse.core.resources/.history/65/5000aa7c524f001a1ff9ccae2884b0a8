@@ -1,0 +1,108 @@
+
+public class Photo {
+	
+	//fields
+		private String caption;
+		private String filename;
+		private int rating;
+		
+		//constructors
+		public Photo(String myFilename, String myCaption) { 
+			this.filename = myFilename;
+			this.caption = myCaption;
+			this.rating = 1;
+		}
+		
+		public Photo(String filename2, String caption2, int rating2) {
+			this.filename = filename2;
+			this.caption = caption2;
+			this.rating = rating2;
+			if (this.rating<1 || this.rating>5) {
+				this.rating = 1;
+			}
+			
+		}
+		 public Photo() {
+			 this.caption = "";
+			 this.filename = "";
+			 this.rating = 1;
+		 }
+		
+	//getters	 
+	public String getCaption() {
+			return caption;
+		}
+
+		public String getFilename() {
+			return filename;
+		}
+
+		public int getRating() {
+			return rating;
+		}
+	//set new rating and return true if rating is different than original and between 1 & 5
+	//sets rating to 1 and returns false otherwise
+	public boolean setRating(int newRating) {
+		if (newRating!=rating && newRating>=1 && newRating<=5) {
+			rating = newRating;
+			System.out.println(rating);
+			return true;
+		}
+		else if (newRating==rating || newRating<1 || newRating>5) {	
+			rating = 1;
+			System.out.println(rating);
+			return false;
+		}
+		else {
+			rating = 1;
+			return false;
+		}
+		
+	}
+	//checks if objects are equal
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false; //null check
+		}
+		if (o instanceof Photo) { //are you a Photo
+			Photo p = (Photo) o; //casting
+			//now I can use p as a Photo
+			return (this.filename == p.filename) && (this.caption == p.caption);
+		}
+		else {//o is not a Photo
+			return false;
+		}
+	}
+	
+	//returns Photo object formatted nicely
+	public String toString() {
+		return "Filename: "+ filename + "\n" + "Caption: " + caption/* + " Rating: " + rating*/;
+	}
+	
+
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		//testing
+		Photo p1 = new Photo("France","C'est la vie");
+		System.out.println(p1.setRating(3));
+		
+		Photo p2 = new Photo("France","C'est la vie",3);
+		System.out.println(p2.setRating(0));
+		System.out.println(p2.toString());
+		System.out.println(p2.setRating(1));
+		
+		Photo p3 = new Photo("France","C'est la vie");
+		System.out.println(p1.equals(p3));
+		
+		Photo p4 = new Photo("Spain", "Hasta luego!",3);
+		System.out.println(p1.equals(p4));
+		
+		System.out.println(p3.toString());
+		
+	}
+
+
+}
