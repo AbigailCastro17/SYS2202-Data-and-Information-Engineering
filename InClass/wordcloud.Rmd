@@ -1,0 +1,94 @@
+---
+title: "Word Cloud"
+author: 'Hayden Ratliff, Pulkit Rampa, Qinyuan Jiang, Abigail Castro, Elly Zarzyski'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We are going to be working with functions from `tidyverse` (e.g., `stringr`, `dplyr`) and `tidytext` to do some basic text mining and build a __word cloud of the first activity you would do after the pandemic is over__. A good introduction to the `tidytext` package is the free book [Text Mining with R (by Silge and Robinson)](https://www.tidytextmining.com/index.html)
+
+# 1- Load necessary packages. 
+You will need tidyverse, tidytext, and ggwordcloud
+```{r}
+library(tidyverse)
+library(tidytext)
+library(ggwordcloud)
+```
+
+# 2- Load the dataset 
+from here: 
+
+```{r}
+cloud_dataframe <- read_csv("text_data.csv")
+```
+
+# 3- Make the data tidy
+A tidy text format is a table with one *token* per row. 
+- A token can be a: word, n-gram, sentence, line, paragraph, tweet
+- This will let us use the power of our tidyverse functions.
+
+## 3.1 *unnest* the text column so there is one *word* per row.
+Hint: use unnest_tokens in tidytext. Convert all words to lowercase.
+
+```{r}
+cloud_tokens <- cloud_dataframe %>% unnest_tokens(word, Activity, to_lower=TRUE, 
+                                                  strip_punct=TRUE)
+```
+
+
+# 4- Clean the text 
+
+## 4.1 - Check if any of the words should be considered together, e.g. "go to" 
+- manual exploration
+  - go to concert
+  
+
+## 4.2 - Create a general name for words that belong to the same category, e.g. mother, parents belong to the family category 
+
+## 4.2 Remove uninteresting words inclduing:
+- stop words such as "an", "and", "of", "the", etc.
+Hint: use stop_words in tidytext to get a list of stop words and then use a join function to remove them from your data (what join function is appropriate here?).
+
+- punctuation if not done in unnest
+  + punctuation was stripped in 3.1
+
+- whitespace
+  + already split on whitespace
+
+- numbers and other non-text characters e.g. apostrophes if any
+  
+```{r}
+numbers <- cloud_tokens %>% filter(str_detect(word, "^[0-9]"))
+cloud_no_numbers <- cloud_tokens %>% anti_join(numbers, by="word")
+```
+
+
+# 5. Count the words
+
+```{r}
+cloud_no_numbers %>% count(word) %>% arrange(desc(n))
+```
+
+
+# 6. Create the word cloud
+
+A word cloud is a graphical representation of text that sizes and colors the words. Size is usually considered to be proportional to the frequency of the word\'s occurrence, but in general could be related to some other measure of *importance*.
+
+The R package `ggwordcloud` implements a wordcloud geom for use with `ggplot2`. The package has a helpful webpage with examples: [`ggwordcloud` R package help](https://lepennec.github.io/ggwordcloud/)
+
+```{r}
+cloud_filtered <- cloud_no_numbers %>% filter(!word %in% c("to", "go", "a", "in", "i", "the", "on", "or", "and"))
+cloud_nums <- cloud_filtered %>% count(word) %>% arrange(desc(n))
+```
+
+```{r}
+cloud_nums %>% with(ggwordcloud(word, n, random.order=FALSE))
+```
+
+
+# 7. According to your word cloud what are the most popular activities you would like to do after the pandemics?
+
+- TRAVEL AND CONCERTS!!!!!!!!!!!!!!!!

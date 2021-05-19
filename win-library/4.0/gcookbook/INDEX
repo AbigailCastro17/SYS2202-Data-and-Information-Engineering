@@ -1,0 +1,32 @@
+aapl                    Apple stock data
+anthoming               Homing in desert ants
+cabbage_exp             Summary of cabbages data set
+climate                 Global climate temperature anomaly data from
+                        1800 to 2011
+corneas                 Corneal thickness of eyes
+countries               Health and economic data about countries around
+                        the world from 1960-2010
+drunk                   Convictions for drunkenness
+gcookbook               gcookbook: Data sets for "R Graphics Cookbook"
+heightweight            Height and weight of schoolchildren
+isabel                  Data from simulation of hurricane Isabel
+madmen                  Successful sexual relations in Mad Men (TV
+                        show)
+madmen2                 Attempted sexual relations in Mad Men (TV show)
+marathon                Marathon and half-marathon times
+pg_mean                 Means of results from an experiment on plant
+                        growth
+plum                    Plum root cuttings (long format)
+plum_wide               Plum root cuttings (wide format)
+simpledat               Simple example data set
+simpledat_long          Simple example data set (long format)
+tg                      Summarized ToothGrowth data
+tophitters2001          Batting averages of the top hitters in Major
+                        League Baseball in 2001
+uspopage                Age distribution of population in the United
+                        States, 1900-2002
+uspopchange             Change in population of states in the U.S.
+                        between 2000 and 2010
+wind                    Wind speed and direction
+worldpop                World population estimates from 10,000 B.C. to
+                        2,000 A.D.

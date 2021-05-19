@@ -1,0 +1,141 @@
+---
+title: "New York Air Traffic"
+author: "Team ?, Abby Castro, Qinyuan Jiang, Angela Wan, Alexandra Labus, Imani Hankison, Julia Sharff"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Please load the nycflights13 package and other necessary packages and follow the following steps.
+```{r}
+library(tidyverse)
+library(nycflights13)
+```
+
+
+# Step 1. Describe the main question you are testing. -All
+Are delays in EWR worse than the delays at the NY airports?
+
+
+# Step 2. Identify the variables that are relevant to the question. -All
+- What are the types of those variables? How do you determine that?
+```{r}
+str(flights)
+flights
+```
+origin: discrete (chr)
+dep_delay: continuous(num)
+arr_delay: continuous(num)
+
+- Describe why those variables may be relevant to this question and why other variables are not relevant 
+The origin is relevant to the question because we are testing if the origin is related to the delay.
+The dep_delay and arr_delay is relevant to the question because that is the measure we will use for comparisons between the origin airports.
+
+
+# Step 3. Search for evidence by visualising, transforming, and modeling your data -Abby
+(Check RDS 3, 5, 7.3, 7.4, 7.5, 7.6 for ideas and inspiration)
+```{r}
+
+```
+
+
+## 3.1 What type of variation occurs within each variable? 
+Pick one variable and test the following:
+
+### 3.1.1 Variable 1 (dep_delay, arr_delay)
+```{r}
+flights %>%
+    group_by(origin) %>% summarize(mean_dep_delay = mean(dep_delay,na.rm=TRUE),med_dep_delay = median(dep_delay,na.rm=TRUE),mean_arr_delay = mean(arr_delay,na.rm=TRUE),med_arr_delay = median(arr_delay,na.rm=TRUE))
+```
+As suggested by the large difference in means and medians of the variables, there is
+a large variation in these variables with distributions that are skewed right. 
+
+
+#### 3.1.1.1 Visualising distributions (Barcharts, Histograms, etc.) (RDS 7, RDS 3) -Qinyuan
+
+- What chart is appropriate for this variable? Why?
+A box plot is the most appropriate for these variables so that you 
+
+- Which values are the most common? Why? 
+
+- Which values are rare? Why? Does that match your expectations? 
+
+- Can you see any unusual patterns? What might explain them? 
+```{r}
+ggplot(data = flights, mapping = aes(x = origin, y = dep_delay)) +
+  geom_boxplot() +
+  ylim(-20,20)
+```
+```{r}
+ggplot(data = flights, mapping = aes(x = origin, y = arr_delay)) +
+  geom_boxplot() +
+  ylim(-60,60)
+```
+
+
+
+#### 3.1.1.2 Unusual values (RDS 7, 5.2) -Angela
+
+- Describe and demonstrate how you determine if there are unusual values in the data. E.g. too large, too small, negative, etc. 
+
+- Describe and demonstrate how you determine if they are outliers. 
+
+- Show how do your distributions look like with and without the unusual values. 
+
+- Discuss whether or not you need to remove unusual values and why. 
+
+Boxplots are very useful to determine these kinds of values; you can see the minimum and maximum of the delaysfor each airport and which values do not lie within the interquartile by inspecting the boxes. When a data point is unreasonably large or small compared to box's range, you can conclude it is an outlier.
+Again, you can determine outliers by seeing which data points do not lie within the max, min, and interquartile
+range of the box plot.
+It depends on the data, however since standard deviation and mean are very sensitive to unusual values,
+it is typically good practice to remove unusual values if they will negatively affect your data and goal
+during data analysis.
+
+
+
+#### 3.1.1.3 Missing values (RDS 5.2.3) 
+
+- Does this variable include missing values? Demonstrate how you determine that. 
+
+- Demonstrate and discuss how you handle the missing values. E.g., removing, replacing with a constant value, or a value based on the distribution, etc. 
+
+- Show how your data looks in each case after handling missing values. Describe and discuss the distribution. 
+
+#### 3.1.1.4 Does converting the type of this variable help exploring the distribution of its values or identifying outliers or missing values? (RDS 7) 
+
+- What type can the variable be converted to? 
+
+- How will the distribution look? Please demonstrate with appropriate plots.
+
+#### 3.1.1.5 What new variables do you need to create from this? (RDS 5.5, 5.6, 5.7)
+
+- List the variables
+
+- Describe and discuss why they are needed and how you plan to use them. 
+
+## 3.2. What type of covariation occurs between the two variables? (RDS 7)
+
+### 3.2.1 Between a categorical and continuous variable or between two categorical variables or between two continuous variables -Julia
+
+- Describe what type of visualization you can use and why.
+It is a categorical(airports) vs continuous(delay time)
+
+- Describe the patterns and relationships you observe. Could the identified patterns be due to coincidence (i.e. random chance)?
+
+- Describe the relationship implied by the pattern? (e.g., positive or negative correlation)
+
+- Calculate the strength of the relationship implied by the pattern (e.g., correlation) 
+
+- Discuss how the observed patterns support/reject your hypotheses or answer your questions.
+
+A histogram should be used to visualize the data - can handle continuous data types
+the data is skewed to the right - there are a large number of flights with small delays, shifting down to a lower delay time
+
+
+# Step 4. Summarize your findings 
+
+- Summarize your findings about the questions you asked at the beginning. 
+
+- Discuss if you have enough evidence to make a conclusion about your analysis. 
